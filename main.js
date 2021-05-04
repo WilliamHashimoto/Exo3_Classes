@@ -26,23 +26,25 @@ let chaise = new Objet ("chaise", 10);
 
 let tab = [table, chaise];
 
-class Personnage extends Objet {
-    constructor (nom, sac, argent, prix) {
-        super(prix),
+class Personnage {
+    constructor (nom, sac, argent) {
         this.nom = nom,
         this.sac = sac,
         this.argent = argent
     }
     prendre(objet) {
-        this.sac.push(objet);
+        this.sac.push(tab[tab.indexOf(objet)]);
         tab.splice(tab.indexOf(objet), 1)
     }
     acheter(vendeur,objet) {
-        console.log(objet);
         if (this.argent >= vendeur.sac[vendeur.sac.indexOf(table)].prix) {
             console.log(objet.prix);
-            this.sac.push(objet);
+            this.sac.push(tab[tab.indexOf(objet)]);
+            this.argent = this.argent - vendeur.sac[vendeur.sac.indexOf(table)].prix;
+            vendeur.argent = vendeur.argent + vendeur.sac[vendeur.sac.indexOf(table)].prix;
             vendeur.sac.splice(tab.indexOf(objet), 1);
+        } else {
+            console.log("T'es pauvre frère");
         }
     }
 }
